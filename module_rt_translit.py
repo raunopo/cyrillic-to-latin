@@ -2,29 +2,33 @@ import re
 import pandas as pd
 
 '''
-UA erireeglit с tähe kohta ei ole rakendatud:
+⚠️Missing implementation of special rules for the letter с in Ukrainian (UA):
+Rules:
 
-Reeglid:
-    s		 Сосюра = Sosjura, Леся = Lesja, Васьо = Vasjo, Мейтус = Meitus
-    ss	vokaalide vahel (kuid mitte я, ю, є ega ьо ees, sest nende algul hääldub konsonant j) ja sõna lõpul rõhulise silbi vokaali järel	Лисенко = Lõssenko, Панас = Panass, Олесь = Oless
+s → Used generally: Сосюра = Sosjura, Леся = Lesja, Васьо = Vasjo, Мейтус = Meitus
 
-Tulemus:
-    Трипільський	ua	trõpilskõi	FALSE	trõpilsskõi
-    Рильський	ua	rõlskõi	FALSE	rõlsskõi
-    Сосюра	ua	sosjura	FALSE	sossjura
-    Леся	ua	lesja	FALSE	lessja
-    Васьо	ua	vasjo	FALSE	vassjo
-    
-    Панас	ua	panass	FALSE	panas
-    
-BY erireeglit ei ole rakendatud:
+ss → Used:
 
-с > ss vokaalide vahel ja sõna lõpul rõhulise silbi vokaali järel
+between vowels, except when followed by я, ю, є, ьо (as these begin with a consonantal j sound)
 
-Tulemus:
-    Барыс	by	barõss	FALSE	barõs
+at the end of a word, following a vowel in a stressed syllable
+→ Лисенко = Løssenko, Панас = Panass, Олесь = Oless
 
+Observed output (incorrect results due to missing rule):
 
+Трипільський   ua   trõpilskõi   FALSE   expected: trõpilsskõi
+Рильський      ua   rõlskõi      FALSE   expected: rõlsskõi
+Сосюра         ua   sosjura      FALSE   expected: sossjura
+Леся           ua   lesja        FALSE   expected: lessja
+Васьо          ua   vasjo        FALSE   expected: vassjo
+Панас          ua   panass       FALSE   expected: panas
+
+⚠️ Missing implementation of Belarusian (BY) special rule:
+Rule:
+с → ss between vowels and at the end of a word after a stressed syllable vowel
+
+Observed output:
+Барыс   by   barõss   FALSE   barõs
 
 
 '''
